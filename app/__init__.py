@@ -12,13 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pandas as pd
-import joblib
+from flask import Flask
+from config import Config
 
-ratings = pd.read_csv('ratings.csv')
-movies = pd.read_csv('movies.csv')
-df = pd.merge(ratings, movies)
-df.drop(['movieId', 'timestamp', 'genres'], axis=1, inplace=True)
-df = df.pivot_table(values='rating', index='title', columns='userId')
-df.sort_index(inplace=True)
-joblib.dump(df, 'data.pkl')
+app = Flask(__name__)
+app.config.from_object(Config)
+
+from app import routes
