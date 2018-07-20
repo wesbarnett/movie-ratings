@@ -75,7 +75,7 @@ def delay_delete(delay, path):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    df = load('data.pkl')
+    df = load('data.gz')
     sorted_movies = df.count(axis=1).sort_values(ascending=False).index.tolist()[:100]
     random.shuffle(sorted_movies)
     
