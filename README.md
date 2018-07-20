@@ -8,3 +8,7 @@ works. In real world applications a user's ratings would be stored and
 their recommendations would update periodically. Here I am asking for
 a user's recommendations and then instantly giving them
 recommendations, so the whole model has to be rebuilt.
+
+The application is in production on my website at:
+
+https://movies.barnett.science
