@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Movie recommender</h1>
+	<p>
+    This is a movie recommender I built using Python (numpy, pandas,
+    scipy, and Flask). The dataset comes from <a
+    href="https://grouplens.org/datasets/movielens/">MovieLens</a>. I
+    am using the small dataset in this program. 
+    
+    Rate the following movies with 1 being the lowest score and 5 the
+    highest score. 'NA' means you don't want to rate the movie. After
+    submitting the form it could take a few minutes to build a model
+    and return your results.
+    </p>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <table>
+		{% for movie, radio in movies %}
+        <tr><td>
+                {{ movie }}
+            </td>
+            {% for subfield in radio %}
+            <td>{{ subfield }}</td>
+            <td>{{ subfield.label }}</td>
+            {% endfor %}
+            {% for error in radio.errors %}
+            <span style="color: red;">[ERROR: {{ error }}]</span>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Movie recommender: results</h1>
+	<p>
+    Here are your results:
+    <ol>
+    {% for movie in predictions %}
+        <li>
+        {{ movie }}
+        </li>
+    {% endfor %}
+    </ol>
+    </p>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+{% endblock %}
