@@ -16,6 +16,42 @@ limitations under the License.
 
 {% extends "base.html" %}
 {% block content %}
+     <script type="text/javascript">// <![CDATA[
+        function loader(){
+            document.getElementById("loading").style.display = "block";
+            document.getElementById("loading_message").style.display = "block";
+            document.getElementById("content").style.display = "none";
+        }//preloader
+     // ]]></script>
+    <style>
+        .loader {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          z-index: 1;
+          width: 150px;
+          height: 150px;
+          margin: -75px 0 0 -75px;
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          width: 120px;
+          height: 120px;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+    <div id="content">
     <h1>Movie recommender</h1>
 	<p>
     This is a movie recommender I built using Python (numpy, pandas,
@@ -32,7 +68,7 @@ limitations under the License.
     submitting the form it could take a few minutes to build a model
     and return your results.
     </p>
-    <form action="" method="post" novalidate>
+    <form onSubmit="return loader()" action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <table>
 		{% for movie, radio in movies %}
@@ -51,6 +87,13 @@ limitations under the License.
         </table>
         <p>{{ form.submit() }}</p>
     </form>
+    </div>
+    <div class="loader" id="loading" style="display:none;">
+    </div>
+    <div id="loading_message" style="display:none;">
+        <h1>Calculating...</h1>
+        <p>This could take several minutes.</p>
+    </div>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}
