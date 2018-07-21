@@ -39,7 +39,7 @@ def gradient(params, Y, n0, n1, num_features, lamb):
     Theta_grad = (np.matmul(X.T, (np.matmul(Theta, X.T) - Y.T).fillna(0).T) + lamb*Theta.T).T
     return np.concatenate([X_grad.ravel(), Theta_grad.ravel()])
 
-def run_collaborative_filtering(Y, num_features, l):
+def run_collaborative_filtering(Y, num_features, l, maxiter=100):
     
     # n0 = rows (movies)
     # n1 = cols (users)
@@ -56,7 +56,7 @@ def run_collaborative_filtering(Y, num_features, l):
     
     minimize_result = minimize(cost, x0, method="L-BFGS-B", 
                            jac=gradient, args=(Ynorm, n0, n1, num_features, l), 
-                           options={"maxiter": 100})
+                           options={"maxiter": maxiter})
     
     X, Theta = np.split(minimize_result.x, [n0*num_features])
     X = X.reshape(n0, -1)
@@ -94,7 +94,8 @@ def index():
             else:
                 new_user[j] = float(form.radio[i].data)
         df['me'] = pd.Series(new_user)
-        p = run_collaborative_filtering(df, 10, 10.0)
+        p = run_collaborative_filtering(df, 10, 10.0,
+                int(form.select.data))
         predictions = p['me'].sort_values(ascending=False).index[:100]
         dump(predictions, tmpdir + '/predictions.pkl')
         return redirect('/results')
