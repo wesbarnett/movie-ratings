@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y apache2 \
  && rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt /var/www/apache-flask/requirements.txt
+RUN python3 -m venv /var/www/apache-flask/venv
+RUN source /var/www/apache-flask/venv/bin/activate
 RUN pip3 install --no-cache-dir -r /var/www/apache-flask/requirements.txt
 
 COPY ./apache/apache-flask.conf /etc/apache2/sites-available/apache-flask.conf
