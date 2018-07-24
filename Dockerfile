@@ -5,6 +5,7 @@ MAINTAINER Wes Barnett
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update
+RUN apt-get upgrade
 RUN apt-get install -y apache2 \
     apache2-dev \
     libapache2-mod-wsgi \
@@ -12,17 +13,15 @@ RUN apt-get install -y apache2 \
     python3 \
     python3-dev\
     python3-pip \
-    python3-venv \
     vim
 RUN apt-get clean
 RUN apt-get autoremove
 RUN rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt /var/www/apache-flask/requirements.txt
-RUN python3 -m venv /var/www/apache-flask/venv
-RUN source /var/www/apache-flask/venv/bin/activate
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r /var/www/apache-flask/requirements.txt
+RUN pip3 install --upgrade pip
+#RUN pip3 install --no-cache-dir -r /var/www/apache-flask/requirements.txt
+RUN pip3 install -r /var/www/apache-flask/requirements.txt
 
 COPY ./apache/apache-flask.conf /etc/apache2/sites-available/apache-flask.conf
 COPY ./apache/apache-flask-ssl.conf /etc/apache2/sites-available/apache-flask-ssl.conf
