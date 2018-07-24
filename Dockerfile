@@ -3,7 +3,7 @@ FROM ubuntu:rolling
 MAINTAINER Wes Barnett
 
 RUN apt-get update && apt-get install -y apache2 \
-    apache2-dev
+    apache2-dev \
     libapache2-mod-wsgi \
     build-essential \
     python3 \
