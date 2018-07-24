@@ -2,6 +2,8 @@ FROM ubuntu:rolling
 
 MAINTAINER Wes Barnett
 
+SHELL ["/bin/sh", "-c"]
+
 RUN apt-get update && apt-get install -y apache2 \
     apache2-dev \
     libapache2-mod-wsgi \
@@ -17,7 +19,7 @@ RUN apt-get update && apt-get install -y apache2 \
 
 COPY ./requirements.txt /var/www/apache-flask/requirements.txt
 RUN python3 -m venv /var/www/apache-flask/venv
-RUN ["/bin/bash", "-c", "source /var/www/apache-flask/venv/bin/activate"]
+RUN source /var/www/apache-flask/venv/bin/activate
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r /var/www/apache-flask/requirements.txt
 
