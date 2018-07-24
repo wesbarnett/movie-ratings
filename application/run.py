@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import sys
-sys.path.insert(0, '/var/www/apache-flask')
+sys.path.insert(0, '/var/www/apache-flask/application')
 
 from app import app as application
 
