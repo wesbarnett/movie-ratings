@@ -4,7 +4,8 @@ MAINTAINER Wes Barnett
 
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update && apt-get install -y apache2 \
+RUN apt-get update
+RUN apt-get install -y apache2 \
     apache2-dev \
     libapache2-mod-wsgi \
     build-essential \
@@ -12,10 +13,10 @@ RUN apt-get update && apt-get install -y apache2 \
     python3-dev\
     python3-pip \
     python3-venv \
-    vim \
- && apt-get clean \
- && apt-get autoremove \
- && rm -rf /var/lib/apt/lists/*
+    vim
+RUN apt-get clean
+RUN apt-get autoremove
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt /var/www/apache-flask/requirements.txt
 RUN python3 -m venv /var/www/apache-flask/venv
