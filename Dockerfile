@@ -21,6 +21,7 @@ COPY ./apache/apache-flask-ssl.conf /etc/apache2/sites-available/apache-flask-ss
 RUN a2ensite apache-flask
 RUN a2ensite apache-flask-ssl
 RUN a2enmod headers
+RUN a2enmod rewrite
 RUN a2dissite 000-default.conf
 
 COPY ./config.py /var/www/apache-flask/config.py
