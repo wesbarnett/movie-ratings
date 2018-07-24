@@ -6,7 +6,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y apache2 apache2-dev libapache2-mod-wsgi build-essential python3 python3-dev python3-pip vim
+RUN apt-get install -y apache2 apache2-dev libapache2-mod-wsgi-py3 build-essential python3 python3-dev python3-pip vim
 RUN apt-get clean
 RUN apt-get autoremove
 RUN rm -rf /var/lib/apt/lists/*
