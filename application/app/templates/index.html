@@ -1,0 +1,106 @@
+<!--
+Copyright 2018 Wes Barnett
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+{% extends "base.html" %}
+{% block content %}
+     <script type="text/javascript">// <![CDATA[
+        function loader(){
+            document.getElementById("loading").style.display = "block";
+            document.getElementById("loading_message").style.display = "block";
+            document.getElementById("content").style.display = "none";
+        }//preloader
+     // ]]></script>
+    <style>
+        .loader {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          z-index: 1;
+          width: 150px;
+          height: 150px;
+          margin: -75px 0 0 -75px;
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          width: 120px;
+          height: 120px;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+    <div id="content">
+    <h1>Movie recommender</h1>
+	<p>
+    This is a movie recommender I built using Python (numpy, pandas,
+    scipy, and Flask). The dataset comes from <a
+    href="https://grouplens.org/datasets/movielens/">MovieLens</a>. I
+    am using the small dataset in this program. The source code is
+    located <a
+        href="https://github.com/wesbarnett/movie-ratings">here</a>.
+    </p>
+    
+    <p>
+    Rate the following movies with 1 being the lowest score and 5 the
+    highest score. 'NA' means you don't want to rate the movie. After
+    submitting the form it could take a few minutes to build a model
+    and return your results.
+    </p>
+    <form onSubmit="return loader()" action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <table>
+		{% for movie, radio in movies %}
+        <tr><td>
+                {{ movie }}
+            </td>
+            {% for subfield in radio %}
+            <td>{{ subfield }}</td>
+            <td>{{ subfield.label }}</td>
+            {% endfor %}
+            {% for error in radio.errors %}
+            <span style="color: red;">[ERROR: {{ error }}]</span>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+        <p>Maximum iterations: {{ form.select }}</p>
+        <p>More iterations means the calculation is more accurate but it takes longer.</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    </div>
+    <div class="loader" id="loading" style="display:none;">
+    </div>
+    <div id="loading_message" style="display:none;">
+        <h1>Calculating...</h1>
+        <p>This could take several minutes.</p>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+{% endblock %}
