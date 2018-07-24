@@ -31,6 +31,7 @@ RUN a2ensite apache-flask
 RUN a2ensite apache-flask-ssl
 RUN a2enmod headers
 RUN a2enmod rewrite
+RUN a2enmod ssl
 RUN a2dissite 000-default.conf
 
 COPY ./config.py /var/www/apache-flask/config.py
