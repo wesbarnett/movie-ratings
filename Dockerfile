@@ -2,7 +2,7 @@ FROM ubuntu:rolling
 
 MAINTAINER Wes Barnett
 
-SHELL ["/bin/sh", "-c"]
+SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && apt-get install -y apache2 \
     apache2-dev \
