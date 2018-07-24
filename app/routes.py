@@ -25,6 +25,8 @@ import tempfile
 import time
 from threading import Thread
 
+wwwdir = '/var/www/apache-flask/'
+
 def cost(params, Y, n0, n1, num_features, lamb):
     X, Theta = np.split(params, [n0*num_features])
     X = X.reshape(n0, -1)
@@ -75,7 +77,7 @@ def delay_delete(delay, path):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    df = load('data.gz')
+    df = load(wwwdir + 'data.gz')
     sorted_movies = df.count(axis=1).sort_values(ascending=False).index.tolist()[:100]
     random.shuffle(sorted_movies)
     
@@ -83,7 +85,7 @@ def index():
     movies = zip(sorted_movies[:20], form.radio)
     if form.validate_on_submit():
 
-        tempfile.tempdir = 'app/static'
+        tempfile.tempdir = wwwdir + '/app/static'
         tmpdir = tempfile.mkdtemp()
         session['tmpdir'] = tmpdir
 
