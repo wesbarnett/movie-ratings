@@ -1,13 +1,16 @@
+# To install latest Docker on Ubuntu go to:
+# https://docs.docker.com/install/linux/docker-ce/ubuntu/
+
 FROM ubuntu:rolling
 
 MAINTAINER Wes Barnett
 
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y apache2 apache2-dev libapache2-mod-wsgi-py3 build-essential python3 python3-dev python3-pip vim
-RUN apt-get clean
-RUN apt-get autoremove
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y apache2 apache2-dev libapache2-mod-wsgi-py3 build-essential python3 python3-dev python3-pip vim && \
+    apt-get clean && \ 
+    apt-get autoremove && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 
