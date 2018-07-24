@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y apache2 \
  && rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt /var/www/apache-flask/requirements.txt
-RUN pip install --no-cache-dir -r /var/www/apache-flask/requirements.txt
+RUN pip3 install --no-cache-dir -r /var/www/apache-flask/requirements.txt
 
 COPY ./apache/apache-flask.conf /etc/apache2/sites-available/apache-flask.conf
 COPY ./apache/apache-flask-ssl.conf /etc/apache2/sites-available/apache-flask-ssl.conf
