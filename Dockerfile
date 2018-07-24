@@ -21,8 +21,8 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 
 COPY ./requirements.txt /var/www/apache-flask/requirements.txt
-RUN pip3 --prefix /usr install --upgrade pip
-RUN pip3 --prefix /usr install --no-cache-dir -r /var/www/apache-flask/requirements.txt
+RUN pip3 install --prefix /usr --upgrade pip
+RUN pip3 install --prefix /usr --no-cache-dir -r /var/www/apache-flask/requirements.txt
 
 COPY ./apache/apache-flask.conf /etc/apache2/sites-available/apache-flask.conf
 COPY ./apache/apache-flask-ssl.conf /etc/apache2/sites-available/apache-flask-ssl.conf
