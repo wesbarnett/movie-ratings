@@ -17,7 +17,7 @@ WORKDIR /var/www/apache-flask
 # Update system and install needed packages
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y apache2-dev build-essential libapache2-mod-wsgi-py3 python3-dev python3-pip vim && \
+    apt-get install -y apache2 apache2-dev build-essential libapache2-mod-wsgi-py3 python3-dev python3-pip vim && \
     apt-get clean && \ 
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
