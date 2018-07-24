@@ -5,7 +5,7 @@ MAINTAINER Wes Barnett
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update
-RUN apt-get upgrade
+RUN apt-get upgrade -y
 RUN apt-get install -y apache2 \
     apache2-dev \
     libapache2-mod-wsgi \
