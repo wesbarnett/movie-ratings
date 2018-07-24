@@ -24,10 +24,10 @@ RUN a2enmod rewrite
 RUN a2enmod ssl
 RUN a2dissite 000-default.conf
 
-COPY ./config.py /var/www/apache-flask/config.py
-COPY ./run.py /var/www/apache-flask/run.py
-COPY ./app /var/www/apache-flask/app/
-COPY ./data.gz /var/www/apache-flask/data.gz
+COPY --chown=www-data ./config.py  /var/www/apache-flask/config.py
+COPY --chown=www-data ./run.py /var/www/apache-flask/run.py
+COPY --chown=www-data ./app /var/www/apache-flask/app/
+COPY --chown=www-data ./data.gz /var/www/apache-flask/data.gz
 
 EXPOSE 80
 EXPOSE 443
