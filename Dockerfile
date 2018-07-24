@@ -18,6 +18,8 @@ RUN apt-get clean
 RUN apt-get autoremove
 RUN rm -rf /var/lib/apt/lists/*
 
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+
 COPY ./requirements.txt /var/www/apache-flask/requirements.txt
 RUN pip3 install --upgrade pip
 #RUN pip3 install --no-cache-dir -r /var/www/apache-flask/requirements.txt
