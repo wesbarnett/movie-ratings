@@ -5,8 +5,7 @@
 #   # docker build -t apache-flask .
 
 # To run:
-#   # SECRET_KEY=$(python3 -c 'import os; print(os.urandom(16))')
-#   # docker run -v /etc/letsencrypt:/etc/letsencrypt -p 80:80 -p 443:443 -e SECRET_KEY='$SECRET_KEY' -d apache-flask
+#   # docker run -v /etc/letsencrypt:/etc/letsencrypt -p 80:80 -p 443:443 -e SECRET_KEY="$(python3 -c 'import os; print(os.urandom(16))')" -d apache-flask
 
 FROM wesbarnett/ubuntu-flask:onbuild-x86_64
 
