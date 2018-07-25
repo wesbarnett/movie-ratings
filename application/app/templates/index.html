@@ -93,13 +93,16 @@ limitations under the License.
         {% endfor %}
         </table>
 
-        <p><a href="javascript:toggleDiv('advanced');">Show advanced options</a></p>
+        <p><a href="javascript:toggleDiv('advanced');">Advanced options</a></p>
 
 		<div id="advanced" style="display:none;">
         <p>Maximum iterations: {{ form.maxiter }}
         {% for error in form.maxiter.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %}
+        <p>Regularization factor: {{ form.lamb }}
+        {% for error in form.lamb.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %}
+        <p>Number of features: {{ form.nfeatures }}
+        {% for error in form.maxiter.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %}
         </p>
-        <p>More iterations means the calculation is more accurate but it takes longer.</p>
 		</div>
 
         <p>{{ form.submit() }}</p>

@@ -97,7 +97,9 @@ def index():
             else:
                 new_user[j] = float(form.radio[i].data)
         df['me'] = pd.Series(new_user)
-        p = run_collaborative_filtering(df, 10, 10.0,
+        p = run_collaborative_filtering(df, 
+                int(form.nfeatures.data),
+                float(form.lamb.data),
                 int(form.maxiter.data))
         predictions = p['me'].sort_values(ascending=False).index[:100]
         dump(predictions, tmpdir + '/predictions.pkl')
