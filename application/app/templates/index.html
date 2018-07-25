@@ -22,6 +22,10 @@ limitations under the License.
             document.getElementById("loading_message").style.display = "block";
             document.getElementById("content").style.display = "none";
         }//preloader
+		function toggleDiv(id) {
+			var div = document.getElementById(id);
+			div.style.display = div.style.display == "none" ? "block" : "none";
+		}
      // ]]></script>
     <style>
         .loader {
@@ -53,6 +57,9 @@ limitations under the License.
     </style>
     <div id="content">
     <h1>Movie recommender</h1>
+	<noscript>Javascript is required for this website to render
+        properly. However, you should still be able to run the program
+        successfully without Javascript.</noscript>
 	<p>
     This is a movie recommender I built using Python (numpy, pandas,
     scipy, and Flask). The dataset comes from <a
@@ -85,10 +92,16 @@ limitations under the License.
         </tr>
         {% endfor %}
         </table>
+
+        <p><a href="javascript:toggleDiv('advanced');">Show advanced options</a></p>
+
+		<div id="advanced" style="display:none;">
         <p>Maximum iterations: {{ form.maxiter }}
         {% for error in form.maxiter.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %}
         </p>
         <p>More iterations means the calculation is more accurate but it takes longer.</p>
+		</div>
+
         <p>{{ form.submit() }}</p>
     </form>
     </div>
