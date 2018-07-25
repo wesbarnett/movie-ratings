@@ -85,7 +85,9 @@ limitations under the License.
         </tr>
         {% endfor %}
         </table>
-        <p>Maximum iterations: {{ form.select }}</p>
+        <p>Maximum iterations: {{ form.maxiter }}
+        {% for error in form.maxiter.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %}
+        </p>
         <p>More iterations means the calculation is more accurate but it takes longer.</p>
         <p>{{ form.submit() }}</p>
     </form>

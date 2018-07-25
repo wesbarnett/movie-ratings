@@ -26,6 +26,7 @@ import time
 from threading import Thread
 
 wwwdir = '/var/www/apache-flask/application'
+#wwwdir = '/home/wes/Documents/programs/movie-ratings/application'
 
 def cost(params, Y, n0, n1, num_features, lamb):
     X, Theta = np.split(params, [n0*num_features])
@@ -97,7 +98,7 @@ def index():
                 new_user[j] = float(form.radio[i].data)
         df['me'] = pd.Series(new_user)
         p = run_collaborative_filtering(df, 10, 10.0,
-                int(form.select.data))
+                int(form.maxiter.data))
         predictions = p['me'].sort_values(ascending=False).index[:100]
         dump(predictions, tmpdir + '/predictions.pkl')
         return redirect('/results')
