@@ -18,9 +18,9 @@ WORKDIR /var/www/apache-flask
 COPY requirements.txt .
 
 # Update system and install needed packages
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install --no-install-recommends -y \
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install --no-install-recommends -y \
         apache2 \
         apache2-dev \
         build-essential \
@@ -28,18 +28,18 @@ RUN apt-get update && \
         python3-dev \
         python3-pip \
         python3-setuptools\
-        vim && \
-    apt-get clean && \ 
-    apt-get autoremove && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip3 install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r ./requirements.txt
+        vim \
+    && apt-get clean \ 
+    && apt-get autoremove \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip3 install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r ./requirements.txt
 
 # Copy and enable apache configurations
 COPY ./apache/* /etc/apache2/sites-available/
-RUN a2ensite apache-flask apache-flask-ssl && \
-    a2enmod rewrite ssl && \
-    a2dissite 000-default.conf
+RUN a2ensite apache-flask apache-flask-ssl \
+    && a2enmod rewrite ssl \
+    && a2dissite 000-default.conf
 
 # Copy application itself
 COPY --chown=www-data application application
