@@ -20,12 +20,12 @@ COPY requirements.txt .
 # Update system and install needed packages
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y apache2 apache2-dev build-essential libapache2-mod-wsgi-py3 python3-dev python3-pip vim && \
+    apt-get install --no-install-recommends -y apache2 apache2-dev build-essential libapache2-mod-wsgi-py3 python3-dev python3-pip vim && \
     apt-get clean && \ 
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* && \
     pip3 install --no-cache-dir --upgrade pip && \
-    pip3 install --no-cache-dir -r ./requirements.txt
+    pip install --no-cache-dir -r ./requirements.txt
 
 # Copy and enable apache configurations
 COPY ./apache/* /etc/apache2/sites-available/
