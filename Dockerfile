@@ -20,7 +20,15 @@ COPY requirements.txt .
 # Update system and install needed packages
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install --no-install-recommends -y apache2 apache2-dev build-essential libapache2-mod-wsgi-py3 python3-dev python3-pip vim && \
+    apt-get install --no-install-recommends -y \
+        apache2 \
+        apache2-dev \
+        build-essential \
+        libapache2-mod-wsgi-py3 \
+        python3-dev \
+        python3-pip \
+        python3-setuptools\
+        vim && \
     apt-get clean && \ 
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* && \
