@@ -96,16 +96,13 @@ limitations under the License.
         <p><a href="javascript:toggleDiv('advanced');">Advanced options</a></p>
 
 		<div id="advanced" style="display:none;">
-        <p>Maximum iterations: {{ form.maxiter }}
-        {% for error in form.maxiter.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %}
-        <p>Regularization factor: {{ form.lamb }}
-        {% for error in form.lamb.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %}
-        <p>Number of features: {{ form.nfeatures }}
-        {% for error in form.maxiter.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %}
-        </p>
+        <p>Maximum iterations: {{ form.maxiter }}   {% for error in form.maxiter.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %} </p>
+        <p>Regularization factor: {{ form.lamb }}   {% for error in form.lamb.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %}    </p>
+        <p>Number of features: {{ form.nfeatures }} {% for error in form.maxiter.errors %}<span style="color: red;">[ERROR: {{ error }}]</span>{% endfor %} </p>
 		</div>
 
         <p>{{ form.submit() }}</p>
+
     </form>
     </div>
     <div class="loader" id="loading" style="display:none;">
