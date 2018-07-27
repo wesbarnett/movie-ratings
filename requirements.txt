@@ -1,4 +1,7 @@
+flask
+flask-wtf
 joblib==0.12.1
+mod-wsgi
 numpy==1.14.5
 pandas==0.23.3
 python-dateutil==2.7.3
