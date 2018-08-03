@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import render_template, flash, redirect, url_for, session
+from flask import render_template, redirect, session
 from app import app
 from app.forms import SubmissionForm
 from joblib import load, dump
