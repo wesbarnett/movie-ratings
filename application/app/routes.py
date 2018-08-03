@@ -26,54 +26,72 @@ import time
 from threading import Thread
 
 wwwdir = '/var/www/apache-flask/application'
-#wwwdir = '/home/wes/Documents/programs/movie-ratings/application'
+# wwwdir = '/home/wes/Documents/programs/movie-ratings/application'
+
 
 def cost(params, Y, n0, n1, num_features, lamb):
-    X, Theta = np.split(params, [n0*num_features])
+    X, Theta = np.split(params, [n0 * num_features])
     X = X.reshape(n0, -1)
     Theta = Theta.reshape(n1, -1)
-    return 0.5 * ((((np.matmul(Theta,X.T)).T - Y)**2).fillna(0).values.sum() + lamb*np.sum(Theta**2) + lamb*np.sum(X**2))
+    return 0.5 * (
+        (((np.matmul(Theta, X.T)).T - Y) ** 2).fillna(0).values.sum()
+        + lamb * np.sum(Theta ** 2)
+        + lamb * np.sum(X ** 2)
+    )
+
 
 def gradient(params, Y, n0, n1, num_features, lamb):
-    X, Theta = np.split(params, [n0*num_features])
+    X, Theta = np.split(params, [n0 * num_features])
     X = X.reshape(n0, -1)
     Theta = Theta.reshape(n1, -1)
-    X_grad = (np.matmul(Theta.T, (np.matmul(Theta, X.T) - Y.T).fillna(0)) + lamb*X.T).T
-    Theta_grad = (np.matmul(X.T, (np.matmul(Theta, X.T) - Y.T).fillna(0).T) + lamb*Theta.T).T
+    X_grad = (
+        np.matmul(Theta.T, (np.matmul(Theta, X.T) - Y.T).fillna(0)) + lamb * X.T
+    ).T
+    Theta_grad = (
+        np.matmul(X.T, (np.matmul(Theta, X.T) - Y.T).fillna(0).T) + lamb * Theta.T
+    ).T
     return np.concatenate([X_grad.ravel(), Theta_grad.ravel()])
 
+
 def run_collaborative_filtering(Y, num_features, l, maxiter=100):
-    
+
     # n0 = rows (movies)
     # n1 = cols (users)
     n0 = Y.shape[0]
     n1 = Y.shape[1]
-    
+
     # Random initilization of parameters, stacked into one flat array
     Theta = np.random.randn(n0, num_features)
     X = np.random.randn(n1, num_features)
     x0 = np.hstack([X.ravel(), Theta.ravel()])
-    
+
     # Subtract the mean for each movie
     Ynorm = Y.sub(Y.mean(axis=1), axis=0)
-    
-    minimize_result = minimize(cost, x0, method="L-BFGS-B", 
-                           jac=gradient, args=(Ynorm, n0, n1, num_features, l), 
-                           options={"maxiter": maxiter})
-    
-    X, Theta = np.split(minimize_result.x, [n0*num_features])
+
+    minimize_result = minimize(
+        cost,
+        x0,
+        method="L-BFGS-B",
+        jac=gradient,
+        args=(Ynorm, n0, n1, num_features, l),
+        options={"maxiter": maxiter},
+    )
+
+    X, Theta = np.split(minimize_result.x, [n0 * num_features])
     X = X.reshape(n0, -1)
     Theta = Theta.reshape(n1, -1)
-    
+
     # Create a DataFrame of the predictions; we have to add back the mean
     p = pd.DataFrame(np.matmul(X, Theta.T), index=Y.index, columns=Y.columns)
     p = p.add(Y.mean(axis=1), axis=0)
     return p
 
+
 def delay_delete(delay, path):
     time.sleep(delay)
     shutil.rmtree(path)
     return
+
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -81,7 +99,7 @@ def index():
     df = load(wwwdir + '/app/data.gz')
     sorted_movies = df.count(axis=1).sort_values(ascending=False).index.tolist()[:100]
     random.shuffle(sorted_movies)
-    
+
     form = SubmissionForm()
     movies = zip(sorted_movies[:20], form.radio)
     if form.validate_on_submit():
@@ -97,15 +115,14 @@ def index():
             else:
                 new_user[j] = float(form.radio[i].data)
         df['me'] = pd.Series(new_user)
-        p = run_collaborative_filtering(df, 
-                int(form.nfeatures.data),
-                float(form.lamb.data),
-                int(form.maxiter.data))
+        p = run_collaborative_filtering(
+            df, int(form.nfeatures.data), float(form.lamb.data), int(form.maxiter.data)
+        )
         predictions = p['me'].sort_values(ascending=False).index[:100]
         dump(predictions, tmpdir + '/predictions.pkl')
         return redirect('/results')
-    return render_template('index.html', form=form,
-            movies=movies)
+    return render_template('index.html', form=form, movies=movies)
+
 
 @app.route('/results')
 def results():
