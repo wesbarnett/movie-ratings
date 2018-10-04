@@ -7,8 +7,7 @@ based off of what I learned in Andrew Ng's Machine Learning course.
 From there I decided to get an updated data set and make this into a
 Flask application.
 
-The application is in production [on my
-website](https://movies.barnett.science) where you can try it out.
+The application is currently offline.
 
 The web application is run in a Docker container using a base image I
 created [here](https://github.com/wesbarnett/apache-flask).
